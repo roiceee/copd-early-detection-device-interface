@@ -1,4 +1,4 @@
-import { collection, getDocs } from "firebase/firestore";
+import { Timestamp, collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { firestore } from "../util/firebase-config";
 
@@ -9,8 +9,11 @@ export default function History() {
       flowRate: number;
       pulse: number;
       ratio: number;
+      timestamp: Timestamp;
     }[]
   >([]);
+
+  const [search, setSearch] = useState<string>("");
 
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -30,6 +33,7 @@ export default function History() {
           flowRate: d.flowRate,
           pulse: d.pulse,
           ratio: d.ratio,
+          timestamp: d.timestamp,
         },
       ]);
     });
@@ -51,7 +55,18 @@ export default function History() {
 
   return (
     <main className="py-5 px-2 md:max-w-[600px] mx-auto">
-      {/* {generate table} */}
+      <section className="my-4">
+        <input
+          type="text"
+          placeholder="Enter name to search"
+          className="input input-bordered input-accent w-full"
+          required
+          onChange={(e) => {
+            setSearch(e.target.value);
+          }}
+          value={search}
+        />
+      </section>
 
       <table className="table table-zebra w-full">
         <thead>
@@ -60,17 +75,23 @@ export default function History() {
             <th>PEF</th>
             <th>FEV/FVC</th>
             <th>SP02</th>
+            <th>Timestamp</th>
           </tr>
         </thead>
         <tbody>
-          {data.map((d, i) => (
-            <tr key={i}>
-              <td>{d.name}</td>
-              <td>{d.flowRate}</td>
-              <td>{d.ratio}</td>
-              <td>{d.pulse}</td>
-            </tr>
-          ))}
+          {data
+            .filter(
+              (d) => d.name.toLowerCase().indexOf(search.toLowerCase()) !== -1
+            )
+            .map((d, i) => (
+              <tr key={i}>
+                <td>{d.name}</td>
+                <td>{d.flowRate}</td>
+                <td>{d.ratio}</td>
+                <td>{d.pulse}</td>
+                <td>{d.timestamp.toDate().toLocaleString()}</td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </main>

@@ -1,5 +1,5 @@
 import { onValue, ref, set } from "firebase/database";
-import { addDoc, collection } from "firebase/firestore";
+import { Timestamp, addDoc, collection } from "firebase/firestore";
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import InstallPWA from "../install-button";
 import Data from "../types/data";
@@ -127,6 +127,7 @@ function Home() {
             flowRate: dataState.flowRate,
             ratio: dataState.ratio,
             pulse: dataState.pulse,
+            timestamp: Timestamp.now(),
           });
           setIsSaving("Saved");
           setTimeout(() => {
