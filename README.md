@@ -1,8 +1,8 @@
-# Stress Monitoring System Feedback Web App
+# CODP Early Detection Web Interface
 
 ## Overview
 
-The Stress Monitoring System Feedback Web App is a progressive web application (PWA) developed to provide users with a seamless experience in providing feedback related to stress monitoring. This application is built using Vite, React with TypeScript, and integrates with Firebase for data storage and authentication.
+This web interface is attached to a NodeMCU device. This application is built using Vite, React with TypeScript, and integrates with Firebase for data storage.
 
 ## Technologies Used
 

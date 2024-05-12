@@ -16,9 +16,9 @@ export default defineConfig({
       },
       includeAssets: ["favicon.ico", "apple-touch.png"],
       manifest: {
-        name: "Stress Monitoring System",
-        short_name: "Stress Monitoring System",
-        description: "Stress Monitoring System",
+        name: "COPD Early Detection",
+        short_name: "COPD Early Detection",
+        description: "COPD Early Detection",
         theme_color: "#FAF4D3",
         icons: [
           {

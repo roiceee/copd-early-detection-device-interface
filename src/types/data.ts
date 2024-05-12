@@ -1,8 +1,10 @@
 type Data = {
-    gsr?: number;
-    heartRate?: number;
-    bodyTemp?: number;
-    stressLevel?: number;
-}
+  prompt?: string;
+  counter?: number;
+  flowRate?: number;
+  pulse?: number;
+  ratio?: number;
+  start?: boolean;
+};
 
 export default Data;
