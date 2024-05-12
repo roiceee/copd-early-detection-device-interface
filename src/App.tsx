@@ -15,7 +15,7 @@ function App() {
       ),
     },
     {
-      path: "/history",
+      path: "/records",
       element: (
         <main>
           <Navbar />

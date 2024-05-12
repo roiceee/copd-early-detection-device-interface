@@ -170,15 +170,24 @@ function Home() {
         <h3 className="mb-4 text-lg font-bold">Current Reading:</h3>
         <div>
           {/* flowrate */}
-          PEF: <b>{dataState.flowRate} L/min</b>
+          <span className="mr-4">PEF:</span>{" "}
+          <b>
+            <span className="text-secondary">{dataState.flowRate}</span> L/min
+          </b>
         </div>
         <div>
           {/* ratio */}
-          FEV/FVC: <b>{dataState.ratio} %</b>
+          <span className="mr-4">FEV/FVC:</span>{" "}
+          <b>
+            <span className="text-secondary">{dataState.ratio}</span> %
+          </b>
         </div>
         <div>
           {/*  */}
-          SP02: <b>{dataState.pulse} %</b>
+          <span className="mr-4">SP02:</span>{" "}
+          <b>
+            <span className="text-secondary">{dataState.pulse}</span> %
+          </b>
         </div>
       </section>
 

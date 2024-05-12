@@ -18,7 +18,7 @@ export default function Navbar() {
               </Link>
             </li>
             <li>
-              <Link to={"/history"}>
+              <Link to={"/records"}>
                 <HistoryIcon />
               </Link>
             </li>
