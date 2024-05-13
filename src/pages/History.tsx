@@ -9,6 +9,7 @@ export default function History() {
       flowRate: number;
       pulse: number;
       ratio: number;
+      evaluation: string;
       timestamp: Timestamp;
     }[]
   >([]);
@@ -33,6 +34,7 @@ export default function History() {
           flowRate: d.flowRate,
           pulse: d.pulse,
           ratio: d.ratio,
+          evaluation: d.evaluation,
           timestamp: d.timestamp,
         },
       ]);
@@ -54,7 +56,7 @@ export default function History() {
   }
 
   return (
-    <main className="py-5 px-2 md:max-w-[600px] mx-auto">
+    <main className="py-5 px-2 md:max-w-[900px] mx-auto">
       <section className="my-4">
         <input
           type="text"
@@ -75,6 +77,7 @@ export default function History() {
             <th>PEF</th>
             <th>FEV/FVC</th>
             <th>SP02</th>
+            <th>Evaluation</th>
             <th>Timestamp</th>
           </tr>
         </thead>
@@ -89,6 +92,7 @@ export default function History() {
                 <td>{d.flowRate}</td>
                 <td>{d.ratio}</td>
                 <td>{d.pulse}</td>
+                <td>{d.evaluation}</td>
                 <td>{d.timestamp.toDate().toLocaleString()}</td>
               </tr>
             ))}

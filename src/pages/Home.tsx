@@ -4,6 +4,7 @@ import { FormEvent, useCallback, useEffect, useState } from "react";
 import InstallPWA from "../install-button";
 import Data from "../types/data";
 import { database, firestore } from "../util/firebase-config";
+import { evaluateCOPD } from "../util/analyzer";
 
 function Home() {
   const [dataState, setDataState] = useState<Data | undefined>({
@@ -23,6 +24,8 @@ function Home() {
     "Save"
   );
 
+  const [category, setCategory] = useState<"male" | "female">("male");
+
   const getData = useCallback(() => {
     const prompt = ref(database, "/prompt");
     const counter = ref(database, "/counter");
@@ -35,7 +38,10 @@ function Home() {
     onValue(prompt, (snapshot) => {
       const data = snapshot.val();
       setDataState((prevState) => {
-        return { ...prevState, prompt: data ? data : "Prompt would be here" };
+        return {
+          ...prevState,
+          prompt: data ? data : "Prompt would be here, please start the device",
+        };
       });
     });
 
@@ -115,7 +121,16 @@ function Home() {
       e.preventDefault();
 
       async function save() {
-        if (!dataState) {
+        if (!dataState || !formState.name) {
+          return;
+        }
+
+        if (
+          (dataState.ratio === undefined ||
+            dataState.flowRate === undefined ||
+            dataState.pulse === undefined,
+          category === undefined)
+        ) {
           return;
         }
 
@@ -127,6 +142,12 @@ function Home() {
             flowRate: dataState.flowRate,
             ratio: dataState.ratio,
             pulse: dataState.pulse,
+            evaluation: evaluateCOPD(
+              dataState.ratio!,
+              dataState.flowRate!,
+              dataState.pulse!,
+              category
+            ).data,
             timestamp: Timestamp.now(),
           });
           setIsSaving("Saved");
@@ -142,7 +163,7 @@ function Home() {
       save();
       resetData();
     },
-    [dataState, formState, resetData]
+    [dataState, formState, resetData, category]
   );
 
   useEffect(() => {
@@ -163,7 +184,7 @@ function Home() {
       <section className="border rounded-lg p-2 text-center py-12">
         <h3 className="text-sm">Please follow the prompt below</h3>
         <h1 className="text-2xl font-bold mt-4">{dataState.prompt}</h1>
-        <h2 className="text-2xl font-bold text-accent">{dataState.counter}</h2>
+        <h2 className="text-2xl font-bold text-accent mt-4">{dataState.counter}</h2>
       </section>
 
       <section className="border rounded-lg p-2 mt-4">
@@ -183,12 +204,59 @@ function Home() {
           </b>
         </div>
         <div>
-          {/*  */}
+          {/* pulse */}
           <span className="mr-4">SP02:</span>{" "}
           <b>
             <span className="text-secondary">{dataState.pulse}</span> %
           </b>
         </div>
+      </section>
+
+      <section className="border rounded-lg p-2 mt-4">
+        <h3>COPD Detection</h3>
+        <div role="tablist" className="tabs tabs-boxed">
+          <a
+            role="tab"
+            className={`tab ${category === "male" ? "tab-active" : ""}`}
+            onClick={() => {
+              setCategory("male");
+            }}
+          >
+            Male
+          </a>
+          <a
+            role="tab"
+            className={`tab ${category === "female" ? "tab-active" : ""}`}
+            onClick={() => {
+              setCategory("female");
+            }}
+          >
+            Female
+          </a>
+        </div>
+        {dataState.ratio !== undefined &&
+          dataState.flowRate !== undefined &&
+          dataState.pulse !== undefined && (
+            <div
+              className={`my-4 text-center text-lg font-bold ${
+                evaluateCOPD(
+                  dataState.ratio,
+                  dataState.flowRate,
+                  dataState.pulse,
+                  category
+                ).style
+              }`}
+            >
+              {
+                evaluateCOPD(
+                  dataState.ratio,
+                  dataState.flowRate,
+                  dataState.pulse,
+                  category
+                ).data
+              }
+            </div>
+          )}
       </section>
 
       <section className="border rounded-lg p-2 mt-4">
