@@ -13,7 +13,7 @@ function evaluateCOPD(
   }
 
   // First, check if all critical conditions are met
-  if (ratio <= 0.7 && SPO2 <= 92) {
+  if (ratio <= 70 && SPO2 <= 92) {
     if (
       (gender === "male" && PEF <= 350) ||
       (gender === "female" && PEF <= 250)
@@ -23,7 +23,7 @@ function evaluateCOPD(
   }
 
   // Next, check if ratio and PEF alone meet criteria for probable COPD
-  if (ratio <= 0.7) {
+  if (ratio <= 70) {
     if (
       (gender === "male" && PEF <= 350) ||
       (gender === "female" && PEF <= 250)
