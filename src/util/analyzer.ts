@@ -18,22 +18,22 @@ function evaluateCOPD(
       (gender === "male" && PEF <= 350) ||
       (gender === "female" && PEF <= 250)
     ) {
-      return { data: "Highly Probable COPD", style: "text-danger" };
+      return { data: "High Risk", style: "text-danger" };
     }
   }
 
-  // Next, check if ratio and PEF alone meet criteria for probable COPD
+  // Next, check if ratio and PEF alone meet criteria for Low Risk
   if (ratio <= 70) {
     if (
       (gender === "male" && PEF <= 350) ||
       (gender === "female" && PEF <= 250)
     ) {
-      return { data: "Probable COPD", style: "text-warning" };
+      return { data: "Low Risk", style: "text-warning" };
     }
 
     // If PEF does not meet the criteria, check ratio and SPO2
     if (SPO2 <= 92) {
-      return { data: "Probable COPD", style: "text-warning" };
+      return { data: "Low Risk", style: "text-warning" };
     }
   }
 
