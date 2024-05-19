@@ -1,10 +1,9 @@
 import { onValue, ref, set } from "firebase/database";
 import { Timestamp, addDoc, collection } from "firebase/firestore";
 import { FormEvent, useCallback, useEffect, useState } from "react";
-import InstallPWA from "../install-button";
 import Data from "../types/data";
-import { database, firestore } from "../util/firebase-config";
 import { evaluateCOPD } from "../util/analyzer";
+import { database, firestore } from "../util/firebase-config";
 
 function Home() {
   const [dataState, setDataState] = useState<Data | undefined>({
@@ -184,7 +183,9 @@ function Home() {
       <section className="border rounded-lg p-2 text-center py-12">
         <h3 className="text-sm">Please follow the prompt below</h3>
         <h1 className="text-2xl font-bold mt-4">{dataState.prompt}</h1>
-        <h2 className="text-2xl font-bold text-accent mt-4">{dataState.counter}</h2>
+        <h2 className="text-2xl font-bold text-accent mt-4">
+          {dataState.counter}
+        </h2>
       </section>
 
       <section className="border rounded-lg p-2 mt-4">
@@ -292,10 +293,6 @@ function Home() {
             </button>
           </div>
         </form>
-      </section>
-
-      <section className="mt-2" style={{ textAlign: "center" }}>
-        <InstallPWA />
       </section>
     </main>
   );
